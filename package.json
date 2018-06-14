@@ -1,0 +1,14 @@
+{
+  "name": "pomodoria",
+  "version": "0.1.0",
+  "description": "Pomodoria is an FOSS clone of the Pomodorium RPG",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "KumoKairo",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^2.0.2"
+  }
+}
