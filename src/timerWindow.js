@@ -1,6 +1,13 @@
-var timerElement = document.querySelector('#timer');
-var statusElement = document.querySelector('#status');
+var timerElement = document.getElementById('timer');
+var statusElement = document.getElementById('status');
+var volumeControl = document.getElementById('volumeControl');
 var workedPomodoros = 0;
+
+var volume = 1;
+
+volumeControl.oninput = function() {
+    volume = this.value / 100;
+} 
 
 // Idle
 // Working
@@ -13,7 +20,7 @@ const secondsToBreak = 300;
 
 timerElement.innerHTML = beautifySeconds(secondsLeft);
 
-var timerButton = document.querySelector('#timerButton');
+var timerButton = document.getElementById('timerButton');
 timerButton.addEventListener('click', () => {
     switch (status) {
         case 'Idle':
@@ -53,6 +60,7 @@ function changeState() {
     switch (status) {
         // We were working, break or stop completely
         case 'Working':
+            playSound(`../assets/sounds/ding_break.ogg`);
             workedPomodoros += 1;
             if (workedPomodoros >= 4) {
                 status = 'Idle';
@@ -65,6 +73,7 @@ function changeState() {
             break;
         // We were breaking, work
         case 'Break':
+            playSound(`../assets/sounds/ding_work.ogg`);
             status = 'Working';
             secondsLeft = secondsToWork;
             break;
@@ -75,4 +84,12 @@ function changeState() {
 
 function beautifySeconds(seconds) {
     return new Date(secondsLeft * 1000).toISOString().substr(14, 5);
+}
+
+function playSound(path)
+{
+    var audio = new Audio(path);
+    audio.volume = volume;
+    audio.play();
+    audio = null;
 }
